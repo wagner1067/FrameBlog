@@ -2,6 +2,7 @@ package com.blog.FrameBlog.controllers;
 
 import com.blog.FrameBlog.models.User;
 import com.blog.FrameBlog.services.UserService;
+import com.blog.FrameBlog.services.V2.UserServiceV2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,10 @@ import java.util.List;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserServiceV2 userServiceV2;
 	
-	@PostMapping("/save")
+	@PostMapping(path = "/save")
 	private @ResponseBody User save(@RequestBody User user) {
 		return userService.save(user);
 	}
@@ -22,26 +25,28 @@ public class UserController {
 	@GetMapping(path = "/getAll")
 	private @ResponseBody List<User> getAll() {
 		return userService.getAll();
+		
 	}
 	
+	// Versionamento por parâmetro de URI
+	// e via parâmetro no cabeçalho
 	@GetMapping(path = "/get")
-	private @ResponseBody User get(@RequestParam final Long id) {
-		return userService.get(id);
+	private @ResponseBody ResponseEntity<Object> get(@RequestParam final Long id, @RequestParam final String uriVersion,
+	                                                 @RequestHeader(name = "Accept-Version") final String acceptVersion) {
+		
+		if (uriVersion.equals("v2") || acceptVersion.equals("v2")) {
+			return ResponseEntity.ok(userService.get(id));
+		}
+		return ResponseEntity.ok(userService.get(id));
 	}
 	
 	@PostMapping(path = "/update")
-	private @ResponseBody User update(@RequestBody final Long id, @RequestBody final User user) {
+	private @ResponseBody User update(@RequestParam final Long id, @RequestBody User user) {
 		return userService.update(id, user);
 	}
 	
 	@DeleteMapping(path = "/delete")
-	private ResponseEntity<?> delete(@RequestParam final Long id) {
+	private void delete(@RequestParam final Long id) {
 		userService.delete(id);
-		return ResponseEntity.ok().build();
-	}
-	
-	@GetMapping(path = "/")
-	public @ResponseBody String authenticate() {
-		return "Hello World!";
 	}
 }

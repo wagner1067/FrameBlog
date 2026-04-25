@@ -17,37 +17,37 @@ import java.io.IOException;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
-    @Autowired
-    private AuthenticationService authenticationService;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Override
-    protected void doFilterInternal(
-            HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
-    ) throws ServletException, IOException {
-        String token = extreacToken(request);
-        if (token != null) {
-            String username = authenticationService.validateToken(token);
-            User user = userRepository.findByUsername(username);
-
-            var authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        }
-
-        filterChain.doFilter(request, response);
-    }
-
-    private String extreacToken(HttpServletRequest request) {
-        var authHeader = request.getHeader("Authorization");
-        if (authHeader == null) {
-            return null;
-        }
-
-        if(!authHeader.split("")[0].equals("Bearer")) {
-            return null;
-        }
-        return authHeader.split(" ")[1];
-    }
+	@Autowired
+	private AuthenticationService authenticationService;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Override
+	protected void doFilterInternal(
+			HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
+	) throws ServletException, IOException {
+		String token = extreacToken(request);
+		if (token != null) {
+			String username = authenticationService.validateToken(token);
+			User user = userRepository.findByUsername(username);
+			
+			var authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+			SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+		}
+		
+		filterChain.doFilter(request, response);
+	}
+	
+	private String extreacToken(HttpServletRequest request) {
+		var authHeader = request.getHeader("Authorization");
+		if (authHeader == null) {
+			return null;
+		}
+		
+		if (!authHeader.split("")[0].equals("Bearer")) {
+			return null;
+		}
+		return authHeader.split(" ")[1];
+	}
 }
