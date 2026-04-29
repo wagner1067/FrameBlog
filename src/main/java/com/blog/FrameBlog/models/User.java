@@ -1,8 +1,8 @@
 package com.blog.FrameBlog.models;
 
-//import com.descomplica.FrameBlog.deserializers.CustomAuthorityDeserializer;
+//import com.blog.FrameBlog.deserializers.CustomAuthorityDeserializer;
 
-import com.descomplica.FrameBlog.enums.RoleEnum;
+import com.blog.FrameBlog.enums.RoleEnum;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

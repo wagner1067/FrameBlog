@@ -12,7 +12,7 @@ public interface UserServiceV2 {
 	
 	List<UserV2> getAll();
 	
-	User get(Long id);
+	UserV2 get(Long id);
 	
 	User update(Long id, User user);
 	

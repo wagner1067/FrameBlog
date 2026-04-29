@@ -68,4 +68,10 @@ public class Post {
 	public void setUserId(User userId) {
 		this.userId = userId;
 	}
+	
+	public Object getTagId() {
+	}
+	
+	public Object getTagId() {
+	}
 }

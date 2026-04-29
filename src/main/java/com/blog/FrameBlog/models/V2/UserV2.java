@@ -1,19 +1,19 @@
 package com.blog.FrameBlog.models.V2;
 
 
-import com.blog.FrameBlog.models.User;
-import com.descomplica.FrameBlog.enums.RoleEnum;
+import com.blog.FrameBlog.enums.RoleEnum;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.management.relation.Role;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "User")
-public class UserV2 extends User implements UserDetails {
+public class UserV2 implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
