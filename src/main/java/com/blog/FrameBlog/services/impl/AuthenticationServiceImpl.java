@@ -19,7 +19,6 @@ import java.time.ZoneOffset;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-	
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -30,7 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	
 	@Override
 	public String getToken(AuthRequest auth) {
-		User user = userRepository.findByUsername(auth.getUsername());
+		User user = userRepository.findByUsername(auth.username());
 		return generateToken(user);
 	}
 	
@@ -41,14 +40,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			return JWT.create()
 					.withIssuer("FrameBlog")
 					.withSubject(user.getUsername())
-					.withExpiresAt(getEspirantionDate())
+					.withExpiresAt(getExpirationDate())
 					.sign(algorithm);
 		} catch (JWTCreationException exception) {
-			throw new RuntimeException("Failed to generate token" + exception.getMessage());
+			throw new RuntimeException("Fail to generate token" + exception.getMessage());
 		}
 	}
 	
-	public String validateToken(String token) {
+	public String validateJwtToken(String token) {
 		try {
 			Algorithm algorithm = Algorithm.HMAC256("my-secret");
 			
@@ -57,12 +56,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 					.build()
 					.verify(token)
 					.getSubject();
+			
 		} catch (JWTVerificationException exception) {
 			return "";
 		}
 	}
 	
-	private Instant getEspirantionDate() {
-		return LocalDateTime.now().plusHours(8).toInstant(ZoneOffset.of("-03:00"));
+	private Instant getExpirationDate() {
+		return LocalDateTime.now()
+				.plusHours(8)
+				.toInstant(ZoneOffset.of("-03:00"));
 	}
 }

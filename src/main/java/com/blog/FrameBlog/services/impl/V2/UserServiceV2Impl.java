@@ -1,6 +1,5 @@
 package com.blog.FrameBlog.services.impl.V2;
 
-import com.blog.FrameBlog.models.User;
 import com.blog.FrameBlog.models.V2.UserV2;
 import com.blog.FrameBlog.repositories.V2.UserRepositoryV2;
 import com.blog.FrameBlog.services.V2.UserServiceV2;
@@ -19,11 +18,6 @@ public class UserServiceV2Impl implements UserServiceV2 {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	@Override
-	public User save(User user) {
-		return null;
-	}
 	
 	@Override
 	public UserV2 save(final UserV2 user) {
@@ -50,11 +44,6 @@ public class UserServiceV2Impl implements UserServiceV2 {
 	@Override
 	public UserV2 get(final Long id) {
 		return userRepositoryV2.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
-	}
-	
-	@Override
-	public User update(Long id, User user) {
-		return null;
 	}
 	
 	@Override

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/comments")
 public class CommentController {
+	
 	@Autowired
 	CommentService commentService;
 	
@@ -15,6 +16,5 @@ public class CommentController {
 	private @ResponseBody Comment save(@RequestBody Comment comment) {
 		return commentService.send(comment);
 	}
-	
 	
 }

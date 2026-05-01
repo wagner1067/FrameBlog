@@ -5,11 +5,11 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class TodosServiceClient {
-	//Classe de consumo de API fake
+	// classe de consumo da fake API
 	public Object[] getAllTodos() {
 		RestTemplate restTemplate = new RestTemplate();
 		
-		String fakeApiUrl = "http://jsonplaceholder.typicode.com/todos";
+		String fakeApiUrl = "https://jsonplaceholder.typicode.com/todos";
 		return restTemplate.getForObject(fakeApiUrl, Object[].class);
 	}
 }

@@ -14,7 +14,6 @@ public class CommentConsumer {
 	
 	@Autowired
 	CommentRepository commentRepository;
-	
 	@Autowired
 	UserRepository userRepository;
 	

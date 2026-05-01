@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthenticationController {
+	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
@@ -22,7 +23,7 @@ public class AuthenticationController {
 	@ResponseBody
 	public AuthResponse login(@RequestBody final AuthRequest auth) {
 		
-		UsernamePasswordAuthenticationToken userAuthenticationToken = new UsernamePasswordAuthenticationToken(auth.getUsername(), auth.getPassword());
+		UsernamePasswordAuthenticationToken userAuthenticationToken = new UsernamePasswordAuthenticationToken(auth.username(), auth.password());
 		
 		authenticationManager.authenticate(userAuthenticationToken);
 		

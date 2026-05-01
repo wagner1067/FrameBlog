@@ -7,5 +7,5 @@ public interface AuthenticationService extends UserDetailsService {
 	
 	String getToken(AuthRequest auth);
 	
-	String validateToken(String token);
+	String validateJwtToken(String token);
 }

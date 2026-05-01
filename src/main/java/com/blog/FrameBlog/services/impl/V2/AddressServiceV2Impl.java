@@ -14,7 +14,6 @@ import java.util.Objects;
 
 @Service
 public class AddressServiceV2Impl implements AddressServiceV2 {
-	
 	@Autowired
 	private AddressRepositoryV2 addressRepositoryV2;
 	

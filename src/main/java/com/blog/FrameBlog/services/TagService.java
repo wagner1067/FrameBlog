@@ -5,6 +5,7 @@ import com.blog.FrameBlog.models.Tag;
 import java.util.List;
 
 public interface TagService {
+	
 	Tag save(final Tag tag);
 	
 	List<Tag> getAll();

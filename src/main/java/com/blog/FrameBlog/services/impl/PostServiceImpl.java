@@ -38,14 +38,14 @@ public class PostServiceImpl implements PostService {
 	
 	@Override
 	public Post get(final Long id) {
-		return (Post) postRepository.findById(id).orElseThrow(
+		return postRepository.findById(id).orElseThrow(
 				() -> new EntityNotFoundException("Post not found")
 		);
 	}
 	
 	@Override
 	public Post update(final Long id, final Post post) {
-		Post postUpdate = (Post) postRepository.findById(id).orElse(null);
+		Post postUpdate = postRepository.findById(id).orElse(null);
 		if (Objects.nonNull(postUpdate)) {
 			postUpdate.setTitle(post.getTitle());
 			postUpdate.setContent(post.getContent());

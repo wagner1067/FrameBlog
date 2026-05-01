@@ -1,8 +1,9 @@
 package com.blog.FrameBlog.repositories;
 
 import com.blog.FrameBlog.models.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class CommentRepository {
-	public void save(Comment comment) {
-	}
+@Repository
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 }

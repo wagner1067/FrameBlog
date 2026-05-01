@@ -23,7 +23,6 @@ public class UserController {
 		return userService.save(user);
 	}
 	
-	
 	@Cacheable
 	@GetMapping(path = "/getAll")
 	private @ResponseBody List<User> getAll() {
@@ -34,13 +33,11 @@ public class UserController {
 	// Versionamento por parâmetro de URI
 	// e via parâmetro no cabeçalho
 	@GetMapping(path = "/get")
-	private @ResponseBody ResponseEntity<Object>
-	get(@RequestParam final Long id,
-	    @RequestParam final String uriVersion,
-	    @RequestHeader(name = "Accept-Version") final String acceptVersion) {
+	private @ResponseBody ResponseEntity<Object> get(@RequestParam final Long id, @RequestParam final String uriVersion,
+	                                                 @RequestHeader(name = "Accept-Version") final String acceptVersion) {
 		
 		if (uriVersion.equals("v2") || acceptVersion.equals("v2")) {
-			return ResponseEntity.ok(userService.get(id));
+			return ResponseEntity.ok(userServiceV2.get(id));
 		}
 		return ResponseEntity.ok(userService.get(id));
 	}

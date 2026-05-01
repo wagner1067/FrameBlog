@@ -1,13 +1,6 @@
 package com.blog.FrameBlog.response;
 
-public class AuthResponse {
-    final String token;
+public record AuthResponse(String token) {
 
-    public AuthResponse(String token) {
-        this.token = token;
-    }
 
-    public String getToken() {
-        return token;
-    }
 }

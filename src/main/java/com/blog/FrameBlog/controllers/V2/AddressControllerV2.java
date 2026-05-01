@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/v2/address")
 public class AddressControllerV2 {
+	
 	@Autowired
 	private AddressServiceV2 addressServiceV2;
 	

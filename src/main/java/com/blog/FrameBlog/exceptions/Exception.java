@@ -3,7 +3,8 @@ package com.blog.FrameBlog.exceptions;
 import java.time.Instant;
 
 public class Exception {
-	private Instant timesstamp;
+	
+	private Instant timestamp;
 	private Integer status;
 	private String error;
 	private String message;
@@ -13,20 +14,12 @@ public class Exception {
 	
 	}
 	
-	public String getPath() {
-		return path;
+	public Instant getTimestamp() {
+		return timestamp;
 	}
 	
-	public void setPath(String path) {
-		this.path = path;
-	}
-	
-	public Instant getTimesstamp() {
-		return timesstamp;
-	}
-	
-	public void setTimesstamp(Instant timesstamp) {
-		this.timesstamp = timesstamp;
+	public void setTimestamp(Instant timestamp) {
+		this.timestamp = timestamp;
 	}
 	
 	public Integer getStatus() {
@@ -51,5 +44,13 @@ public class Exception {
 	
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	
+	public String getPath() {
+		return path;
+	}
+	
+	public void setPath(String path) {
+		this.path = path;
 	}
 }

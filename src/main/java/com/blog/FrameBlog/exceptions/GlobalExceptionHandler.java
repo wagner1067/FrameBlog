@@ -18,13 +18,17 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(EntityNotFoundException.class)
 	public ResponseEntity<Exception> entityNotFound(EntityNotFoundException e, HttpServletRequest request) {
+		
 		logger.error("Entity Not Found Exception");
+		
 		Exception err = new Exception();
-		err.setTimesstamp(Instant.now());
+		
+		err.setTimestamp(Instant.now());
 		err.setStatus(HttpStatus.NOT_FOUND.value());
-		err.setError("Resource Not Found");
-		err.setMessage(e.getMessage());// menssagem mapeada
+		err.setError("Resource not found");
+		err.setMessage(e.getMessage()); // mensagem mapeada
 		err.setPath(request.getRequestURI());
+		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
 	

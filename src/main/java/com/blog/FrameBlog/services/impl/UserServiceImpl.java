@@ -3,6 +3,7 @@ package com.blog.FrameBlog.services.impl;
 import com.blog.FrameBlog.models.User;
 import com.blog.FrameBlog.repositories.UserRepository;
 import com.blog.FrameBlog.services.UserService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,24 +22,20 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder passwordEncoder;
 	
 	@Override
+	@CircuitBreaker(name = "circuitBreaker")
 	public User save(final User user) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
+		
 		if (Objects.nonNull(existingUser)) {
-			throw new RuntimeException("User already exists");
+			throw new RuntimeException("Existing User");
 		}
 		String passwordHash = passwordEncoder.encode(user.getPassword());
 		
-		User entity = new User(
-				user.getUserId(),
-				user.getName(),
-				user.getEmail(),
-				user.getUsername(),
-				user.getPassword(),
-				user.getRole()
-		);
+		User entity = new User(user.getUserId(), user.getName(), user.getEmail(), passwordHash, user.getUsername(), user.getRole());
 		
 		User newUser = userRepository.save(entity);
-		return new User(newUser.getUserId(), newUser.getName(), newUser.getEmail(), newUser.getUsername(), newUser.getPassword(), newUser.getRole());
+		
+		return new User(newUser.getUserId(), newUser.getName(), newUser.getEmail(), newUser.getPassword(), newUser.getUsername(), newUser.getRole());
 	}
 	
 	@Override
@@ -55,15 +52,14 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User update(final Long id, final User user) {
-		User userUpdate = userRepository.findById(id)
-				.orElse(null);
+		User userUpdate = userRepository.findById(id).orElse(null);
 		if (Objects.nonNull(userUpdate)) {
 			String passwordHash = passwordEncoder.encode(user.getPassword());
 			userUpdate.setName(user.getName());
 			userUpdate.setUsername(user.getUsername());
 			userUpdate.setEmail(user.getEmail());
 			userUpdate.setRole(user.getRole());
-			userUpdate.setPassword(user.getPassword());
+			userUpdate.setPassword(passwordHash);
 			return userRepository.save(userUpdate);
 		}
 		return null;
@@ -73,4 +69,6 @@ public class UserServiceImpl implements UserService {
 	public void delete(final Long id) {
 		userRepository.deleteById(id);
 	}
+	
+	
 }
